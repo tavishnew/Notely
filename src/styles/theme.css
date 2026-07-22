@@ -1,0 +1,342 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-bg: var(--color-bg);
+  --color-panel: var(--color-panel);
+  --color-edge: var(--color-edge);
+  --color-ink: var(--color-ink);
+  --color-ink-dim: var(--color-ink-dim);
+  --color-ink-faint: var(--color-ink-faint);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-accent-soft: var(--color-accent-soft);
+  --color-accent-softer: var(--color-accent-softer);
+  --color-callout-bg: var(--color-callout-bg);
+  --color-callout-ink: var(--color-callout-ink);
+  --color-danger-soft: var(--color-danger-soft);
+  --color-danger-ink: var(--color-danger-ink);
+  --color-success-soft: var(--color-success-soft);
+  --color-sunrise: var(--color-sunrise);
+  --color-butter: var(--color-butter);
+}
+
+/* Notely — Ink & Sunrise
+ * Palette: near-black ink, warm cream paper, sunrise orange, buttery amber
+ * Type:    Outfit (display) + Figtree (body)
+ */
+
+:root,
+:root[data-theme="light"] {
+  --radius: 0.875rem;
+
+  /* Brand colors */
+  --color-ink: oklch(0.24 0.025 55);
+  --color-paper: oklch(0.975 0.012 80);
+  --color-sunrise: oklch(0.72 0.19 45);
+  --color-butter: oklch(0.88 0.15 90);
+
+  /* Semantic colors */
+  --background: var(--color-paper);
+  --foreground: var(--color-ink);
+  --card: oklch(0.99 0.006 80);
+  --card-foreground: var(--color-ink);
+  --primary: var(--color-sunrise);
+  --primary-foreground: oklch(0.99 0.006 80);
+  --secondary: oklch(0.94 0.02 80);
+  --secondary-foreground: var(--color-ink);
+  --muted: oklch(0.94 0.015 80);
+  --muted-foreground: oklch(0.45 0.02 55);
+  --accent: var(--color-butter);
+  --accent-foreground: var(--color-ink);
+  --destructive: oklch(0.6 0.22 25);
+  --border: oklch(0.9 0.015 80);
+  --input: oklch(0.9 0.015 80);
+  --ring: var(--color-sunrise);
+
+  --color-bg: var(--background);
+  --color-panel: var(--card);
+  --color-card: var(--card);
+  --color-card-hover: var(--secondary);
+  --color-edge: var(--border);
+  --color-ink-dim: var(--muted-foreground);
+  --color-ink-faint: oklch(0.62 0.015 55);
+  --color-accent: var(--primary);
+  --color-accent-hover: #ea580c;
+  --color-accent-soft: #fed7aa;
+  --color-accent-softer: #fff7ed;
+  --color-callout-bg: #fff7ed;
+  --color-callout-ink: #92400e;
+  --color-danger-soft: #fde3dd;
+  --color-danger-ink: #dc2626;
+  --color-success-soft: #d3ecc9;
+}
+
+:root[data-theme="dark"] {
+  /* Brand colors */
+  --color-ink: #faf7f2;
+  --color-paper: #1a1612;
+  --color-sunrise: #f97316;
+  --color-butter: #fcd34d;
+
+  /* Semantic colors */
+  --color-bg: #1a1612;
+  --color-panel: #24201c;
+  --color-card: #2a2622;
+  --color-card-hover: #36322e;
+  --color-edge: #403c38;
+  --color-ink: #faf7f2;
+  --color-ink-dim: #a8a49e;
+  --color-ink-faint: #6b6560;
+  --color-accent: #f97316;
+  --color-accent-hover: #ea580c;
+  --color-accent-soft: #7c2d12;
+  --color-accent-softer: #431407;
+  --color-callout-bg: #431407;
+  --color-callout-ink: #fed7aa;
+  --color-danger-soft: #431407;
+  --color-danger-ink: #fca5a5;
+  --color-success-soft: #14532d;
+
+  --background: var(--color-bg);
+  --foreground: var(--color-ink);
+  --card: var(--color-card);
+  --card-foreground: var(--color-ink);
+  --primary: var(--color-accent);
+  --primary-foreground: var(--color-bg);
+  --secondary: var(--color-card-hover);
+  --secondary-foreground: var(--color-ink);
+  --muted: var(--color-card-hover);
+  --muted-foreground: var(--color-ink-dim);
+  --accent: var(--color-butter);
+  --accent-foreground: var(--color-bg);
+  --destructive: var(--color-danger-ink);
+  --border: var(--color-edge);
+  --input: var(--color-edge);
+  --ring: var(--color-accent);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  user-select: none;
+  cursor: default;
+}
+
+h1,
+h2,
+h3,
+h4,
+button,
+input,
+.font-display {
+  font-family: "Outfit", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* text inputs and editor content remain selectable */
+input,
+textarea,
+[contenteditable="true"],
+.selectable {
+  user-select: text;
+  cursor: auto;
+}
+
+/* Rendered markdown (chat answers). Gives block spacing/typography without a
+   prose plugin. */
+.prose-nitro > * + * {
+  margin-top: 0.55rem;
+}
+.prose-nitro h1,
+.prose-nitro h2,
+.prose-nitro h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin-top: 0.9rem;
+  line-height: 1.3;
+}
+.prose-nitro h1 {
+  font-size: 1.25rem;
+}
+.prose-nitro h2 {
+  font-size: 1.1rem;
+}
+.prose-nitro h3 {
+  font-size: 1rem;
+}
+.prose-nitro ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+.prose-nitro ol {
+  list-style: decimal;
+  padding-left: 1.25rem;
+}
+.prose-nitro li {
+  margin-top: 0.2rem;
+}
+.prose-nitro strong {
+  font-weight: 700;
+}
+.prose-nitro a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+.prose-nitro code {
+  background: var(--nitro-panel);
+  padding: 0.1em 0.35em;
+  border-radius: 0.3rem;
+  font-size: 0.85em;
+}
+.prose-nitro pre {
+  background: var(--nitro-panel);
+  border: 1px solid var(--nitro-edge);
+  border-radius: 0.6rem;
+  padding: 0.75rem;
+  overflow-x: auto;
+}
+.prose-nitro pre code {
+  background: none;
+  padding: 0;
+}
+.prose-nitro table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.prose-nitro th,
+.prose-nitro td {
+  border: 1px solid var(--nitro-edge);
+  padding: 0.35rem 0.6rem;
+  text-align: left;
+}
+.prose-nitro blockquote {
+  border-left: 3px solid color-mix(in srgb, var(--color-accent) 60%, transparent);
+  padding-left: 0.9rem;
+  color: var(--nitro-ink-dim);
+  font-style: italic;
+}
+/* KaTeX: let long display equations scroll instead of overflowing the bubble. */
+.katex-display {
+  margin: 0.6rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.katex {
+  font-size: 1.02em;
+}
+
+/* Utility classes for landing page */
+.bg-grid-paper {
+  background-image:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-ink) 12%, transparent) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+.motion-enter {
+  animation: notely-enter 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+.motion-rise {
+  animation: notely-rise 0.5s ease-out both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+.logo-enter {
+  transform-origin: center;
+  animation: notely-logo 0.7s cubic-bezier(0.2, 1.3, 0.3, 1) both;
+}
+
+.tilt-card {
+  transform-style: preserve-3d;
+}
+
+.tilt-card:hover {
+  transform: perspective(800px) rotateX(-4deg) rotateY(10deg);
+}
+
+@keyframes wave {
+  0%, 100% {
+    height: 25%;
+  }
+  50% {
+    height: var(--wave-height, 50%);
+  }
+}
+
+@keyframes notely-enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes notely-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes notely-logo {
+  from {
+    opacity: 0;
+    transform: rotate(-8deg) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .motion-enter,
+  .motion-rise,
+  .logo-enter {
+    transform: none;
+  }
+}
