@@ -1,0 +1,741 @@
+(node:4104) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/tavis/Desktop/Notely/overflow-detect.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to C:\Users\tavis\Desktop\Notely\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+  "type": "object",
+  "value": {
+    "dims": {
+      "inner": [
+        1440,
+        900
+      ],
+      "docScroll": [
+        1440,
+        3041
+      ],
+      "bodyScroll": [
+        1440,
+        3041
+      ],
+      "htmlHScroll": false,
+      "bodyHScroll": false,
+      "htmlVScroll": true,
+      "bodyVScroll": true,
+      "route": "/"
+    },
+    "overflowing": [
+      {
+        "path": "DIV#root > DIV.min-h-.creen bg-background text-foreground > FOOTER.border-t border-border/60 bg-background > DIV.mx-auto flex max-w-7xl flex-col item.-center ju.tify-between gap-6 px-6 py-10 m > DIV.flex item.-center gap-2.5 > svg > rect",
+        "tag": "rect",
+        "id": null,
+        "cls": "",
+        "rect": {
+          "l": 111,
+          "t": 2976,
+          "r": 112.4,
+          "b": 2998.4,
+          "w": 1.4,
+          "h": 22.4
+        },
+        "farRight": -1327.6,
+        "farLeft": -111,
+        "farBottom": 2098.4,
+        "farTop": -2976,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "DIV#root > DIV.min-h-.creen bg-background text-foreground > FOOTER.border-t border-border/60 bg-background > DIV.mx-auto flex max-w-7xl flex-col item.-center ju.tify-between gap-6 px-6 py-10 m > DIV.flex item.-center gap-2.5 > svg > path",
+        "tag": "path",
+        "id": null,
+        "cls": "",
+        "rect": {
+          "l": 114.5,
+          "t": 2983,
+          "r": 122.9,
+          "b": 2991.4,
+          "w": 8.4,
+          "h": 8.4
+        },
+        "farRight": -1317.1,
+        "farLeft": -114.5,
+        "farBottom": 2091.4,
+        "farTop": -2983,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "DIV#root > DIV.min-h-.creen bg-background text-foreground > FOOTER.border-t border-border/60 bg-background > DIV.mx-auto flex max-w-7xl flex-col item.-center ju.tify-between gap-6 px-6 py-10 m > DIV.flex item.-center gap-2.5 > svg > rect",
+        "tag": "rect",
+        "id": null,
+        "cls": "",
+        "rect": {
+          "l": 108.2,
+          "t": 2976,
+          "r": 126.4,
+          "b": 2998.4,
+          "w": 18.2,
+          "h": 22.4
+        },
+        "farRight": -1313.6,
+        "farLeft": -108.2,
+        "farBottom": 2098.4,
+        "farTop": -2976,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "BODY > DIV#root > DIV.min-h-.creen bg-background text-foreground > FOOTER.border-t border-border/60 bg-background > DIV.mx-auto flex max-w-7xl flex-col item.-center ju.tify-between gap-6 px-6 py-10 m > DIV.flex item.-center gap-2.5 > svg",
+        "tag": "svg",
+        "id": null,
+        "cls": "",
+        "rect": {
+          "l": 104,
+          "t": 2973.2,
+          "r": 132,
+          "b": 3001.2,
+          "w": 28,
+          "h": 28
+        },
+        "farRight": -1308,
+        "farLeft": -104,
+        "farBottom": 2101.2,
+        "farTop": -2973.2,
+        "pos": "static",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden",
+        "transform": "none"
+      },
+      {
+        "path": "BODY > DIV#root > DIV.min-h-.creen bg-background text-foreground > FOOTER.border-t border-border/60 bg-background > DIV.mx-auto flex max-w-7xl flex-col item.-center ju.tify-between gap-6 px-6 py-10 m > DIV.flex item.-center gap-2.5 > SPAN.font-di.play font-.emibold",
+        "tag": "SPAN",
+        "id": null,
+        "cls": "font-display font-semibold",
+        "rect": {
+          "l": 142,
+          "t": 2975.2,
+          "r": 189.6,
+          "b": 2999.2,
+          "w": 47.6,
+          "h": 24
+        },
+        "farRight": -1250.4,
+        "farLeft": -142,
+        "farBottom": 2099.2,
+        "farTop": -2975.2,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "BODY > DIV#root > DIV.min-h-.creen bg-background text-foreground > FOOTER.border-t border-border/60 bg-background > DIV.mx-auto flex max-w-7xl flex-col item.-center ju.tify-between gap-6 px-6 py-10 m > DIV.flex item.-center gap-2.5 > SPAN.text-.m text-muted-foreground",
+        "tag": "SPAN",
+        "id": null,
+        "cls": "text-sm text-muted-foreground",
+        "rect": {
+          "l": 199.6,
+          "t": 2977.2,
+          "r": 318.6,
+          "b": 2997.2,
+          "w": 119,
+          "h": 20
+        },
+        "farRight": -1121.4,
+        "farLeft": -199.6,
+        "farBottom": 2097.2,
+        "farTop": -2977.2,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "HTML > BODY > DIV#root > DIV.min-h-.creen bg-background text-foreground > FOOTER.border-t border-border/60 bg-background > DIV.mx-auto flex max-w-7xl flex-col item.-center ju.tify-between gap-6 px-6 py-10 m > DIV.flex item.-center gap-2.5",
+        "tag": "DIV",
+        "id": null,
+        "cls": "flex items-center gap-2.5",
+        "rect": {
+          "l": 104,
+          "t": 2973.2,
+          "r": 318.6,
+          "b": 3001.2,
+          "w": 214.6,
+          "h": 28
+        },
+        "farRight": -1121.4,
+        "farLeft": -104,
+        "farBottom": 2101.2,
+        "farTop": -2973.2,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "HTML > BODY > DIV#root > DIV.min-h-.creen bg-background text-foreground > FOOTER.border-t border-border/60 bg-background > DIV.mx-auto flex max-w-7xl flex-col item.-center ju.tify-between gap-6 px-6 py-10 m > P.text-x. text-muted-foreground",
+        "tag": "P",
+        "id": null,
+        "cls": "text-xs text-muted-foreground",
+        "rect": {
+          "l": 1110.2,
+          "t": 2979.2,
+          "r": 1336,
+          "b": 2995.2,
+          "w": 225.8,
+          "h": 16
+        },
+        "farRight": -104,
+        "farLeft": -1110.2,
+        "farBottom": 2095.2,
+        "farTop": -2979.2,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > UL..pace-y-3 text-.m > LI.flex item.-center gap-3 rounded-2xl border border-background/15 bg-background/5 > svg > path",
+        "tag": "path",
+        "id": null,
+        "cls": "",
+        "rect": {
+          "l": 828.9,
+          "t": 2764.7,
+          "r": 839.6,
+          "b": 2772,
+          "w": 10.7,
+          "h": 7.3
+        },
+        "farRight": -600.4,
+        "farLeft": -828.9,
+        "farBottom": 1872,
+        "farTop": -2764.7,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "DIV.min-h-.creen bg-background text-foreground > SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > UL..pace-y-3 text-.m > LI.flex item.-center gap-3 rounded-2xl border border-background/15 bg-background/5 > svg",
+        "tag": "svg",
+        "id": null,
+        "cls": "",
+        "rect": {
+          "l": 826.3,
+          "t": 2760.7,
+          "r": 842.3,
+          "b": 2776.7,
+          "w": 16,
+          "h": 16
+        },
+        "farRight": -597.8,
+        "farLeft": -826.3,
+        "farBottom": 1876.7,
+        "farTop": -2760.7,
+        "pos": "static",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden",
+        "transform": "none"
+      },
+      {
+        "path": "SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > UL..pace-y-3 text-.m > LI.flex item.-center gap-3 rounded-2xl border border-background/15 bg-background/5 > svg > path",
+        "tag": "path",
+        "id": null,
+        "cls": "",
+        "rect": {
+          "l": 828.9,
+          "t": 2706.7,
+          "r": 839.6,
+          "b": 2714,
+          "w": 10.7,
+          "h": 7.3
+        },
+        "farRight": -600.4,
+        "farLeft": -828.9,
+        "farBottom": 1814,
+        "farTop": -2706.7,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "DIV.min-h-.creen bg-background text-foreground > SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > UL..pace-y-3 text-.m > LI.flex item.-center gap-3 rounded-2xl border border-background/15 bg-background/5 > svg",
+        "tag": "svg",
+        "id": null,
+        "cls": "",
+        "rect": {
+          "l": 826.3,
+          "t": 2702.7,
+          "r": 842.3,
+          "b": 2718.7,
+          "w": 16,
+          "h": 16
+        },
+        "farRight": -597.8,
+        "farLeft": -826.3,
+        "farBottom": 1818.7,
+        "farTop": -2702.7,
+        "pos": "static",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden",
+        "transform": "none"
+      },
+      {
+        "path": "SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > UL..pace-y-3 text-.m > LI.flex item.-center gap-3 rounded-2xl border border-background/15 bg-background/5 > svg > path",
+        "tag": "path",
+        "id": null,
+        "cls": "",
+        "rect": {
+          "l": 828.9,
+          "t": 2648.7,
+          "r": 839.6,
+          "b": 2656,
+          "w": 10.7,
+          "h": 7.3
+        },
+        "farRight": -600.4,
+        "farLeft": -828.9,
+        "farBottom": 1756,
+        "farTop": -2648.7,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "DIV.min-h-.creen bg-background text-foreground > SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > UL..pace-y-3 text-.m > LI.flex item.-center gap-3 rounded-2xl border border-background/15 bg-background/5 > svg",
+        "tag": "svg",
+        "id": null,
+        "cls": "",
+        "rect": {
+          "l": 826.3,
+          "t": 2644.7,
+          "r": 842.3,
+          "b": 2660.7,
+          "w": 16,
+          "h": 16
+        },
+        "farRight": -597.8,
+        "farLeft": -826.3,
+        "farBottom": 1760.7,
+        "farTop": -2644.7,
+        "pos": "static",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden",
+        "transform": "none"
+      },
+      {
+        "path": "SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > UL..pace-y-3 text-.m > LI.flex item.-center gap-3 rounded-2xl border border-background/15 bg-background/5 > svg > path",
+        "tag": "path",
+        "id": null,
+        "cls": "",
+        "rect": {
+          "l": 828.9,
+          "t": 2590.7,
+          "r": 839.6,
+          "b": 2598,
+          "w": 10.7,
+          "h": 7.3
+        },
+        "farRight": -600.4,
+        "farLeft": -828.9,
+        "farBottom": 1698,
+        "farTop": -2590.7,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "DIV.min-h-.creen bg-background text-foreground > SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > UL..pace-y-3 text-.m > LI.flex item.-center gap-3 rounded-2xl border border-background/15 bg-background/5 > svg",
+        "tag": "svg",
+        "id": null,
+        "cls": "",
+        "rect": {
+          "l": 826.3,
+          "t": 2586.7,
+          "r": 842.3,
+          "b": 2602.7,
+          "w": 16,
+          "h": 16
+        },
+        "farRight": -597.8,
+        "farLeft": -826.3,
+        "farBottom": 1702.7,
+        "farTop": -2586.7,
+        "pos": "static",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden",
+        "transform": "none"
+      },
+      {
+        "path": "SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > DIV > DIV.inline-flex item.-center gap-2 rounded-full border border-background/20 px-3 py > svg > path",
+        "tag": "path",
+        "id": null,
+        "cls": "",
+        "rect": {
+          "l": 187.3,
+          "t": 2580,
+          "r": 190.8,
+          "b": 2582.4,
+          "w": 3.5,
+          "h": 2.3
+        },
+        "farRight": -1249.3,
+        "farLeft": -187.3,
+        "farBottom": 1682.4,
+        "farTop": -2580,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > DIV > DIV.inline-flex item.-center gap-2 rounded-full border border-background/20 px-3 py > svg > path",
+        "tag": "path",
+        "id": null,
+        "cls": "",
+        "rect": {
+          "l": 184.3,
+          "t": 2575.4,
+          "r": 193.7,
+          "b": 2587,
+          "w": 9.3,
+          "h": 11.7
+        },
+        "farRight": -1246.3,
+        "farLeft": -184.3,
+        "farBottom": 1687,
+        "farTop": -2575.4,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "DIV.min-h-.creen bg-background text-foreground > SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > DIV > DIV.inline-flex item.-center gap-2 rounded-full border border-background/20 px-3 py > svg",
+        "tag": "svg",
+        "id": null,
+        "cls": "",
+        "rect": {
+          "l": 182,
+          "t": 2574.2,
+          "r": 196,
+          "b": 2588.2,
+          "w": 14,
+          "h": 14
+        },
+        "farRight": -1244,
+        "farLeft": -182,
+        "farBottom": 1688.2,
+        "farTop": -2574.2,
+        "pos": "static",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden",
+        "transform": "none"
+      },
+      {
+        "path": "DIV#root > DIV.min-h-.creen bg-background text-foreground > SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > UL..pace-y-3 text-.m > LI.flex item.-center gap-3 rounded-2xl border border-background/15 bg-background/5",
+        "tag": "LI",
+        "id": null,
+        "cls": "flex items-center gap-3 rounded-2xl border border-background/15 bg-background/5 px-4 py-3",
+        "rect": {
+          "l": 809.3,
+          "t": 2745.7,
+          "r": 1271,
+          "b": 2791.7,
+          "w": 461.8,
+          "h": 46
+        },
+        "farRight": -169,
+        "farLeft": -809.3,
+        "farBottom": 1891.7,
+        "farTop": -2745.7,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "DIV#root > DIV.min-h-.creen bg-background text-foreground > SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > DIV > DIV.inline-flex item.-center gap-2 rounded-full border border-background/20 px-3 py",
+        "tag": "DIV",
+        "id": null,
+        "cls": "inline-flex items-center gap-2 rounded-full border border-background/20 px-3 py-1 text-xs font-medium",
+        "rect": {
+          "l": 169,
+          "t": 2568.2,
+          "r": 323.8,
+          "b": 2594.2,
+          "w": 154.8,
+          "h": 26
+        },
+        "farRight": -1116.3,
+        "farLeft": -169,
+        "farBottom": 1694.2,
+        "farTop": -2568.2,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "DIV#root > DIV.min-h-.creen bg-background text-foreground > SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > DIV > P.mt-4 max-w-xl text-background/70",
+        "tag": "P",
+        "id": null,
+        "cls": "mt-4 max-w-xl text-background/70",
+        "rect": {
+          "l": 169,
+          "t": 2747.2,
+          "r": 745,
+          "b": 2795.2,
+          "w": 576,
+          "h": 48
+        },
+        "farRight": -695,
+        "farLeft": -169,
+        "farBottom": 1895.2,
+        "farTop": -2747.2,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "DIV#root > DIV.min-h-.creen bg-background text-foreground > SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > UL..pace-y-3 text-.m > LI.flex item.-center gap-3 rounded-2xl border border-background/15 bg-background/5",
+        "tag": "LI",
+        "id": null,
+        "cls": "flex items-center gap-3 rounded-2xl border border-background/15 bg-background/5 px-4 py-3",
+        "rect": {
+          "l": 809.3,
+          "t": 2687.7,
+          "r": 1271,
+          "b": 2733.7,
+          "w": 461.8,
+          "h": 46
+        },
+        "farRight": -169,
+        "farLeft": -809.3,
+        "farBottom": 1833.7,
+        "farTop": -2687.7,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "BODY > DIV#root > DIV.min-h-.creen bg-background text-foreground > SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > UL..pace-y-3 text-.m",
+        "tag": "UL",
+        "id": null,
+        "cls": "space-y-3 text-sm",
+        "rect": {
+          "l": 809.3,
+          "t": 2571.7,
+          "r": 1271,
+          "b": 2791.7,
+          "w": 461.8,
+          "h": 220
+        },
+        "farRight": -169,
+        "farLeft": -809.3,
+        "farBottom": 1891.7,
+        "farTop": -2571.7,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "DIV#root > DIV.min-h-.creen bg-background text-foreground > SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > UL..pace-y-3 text-.m > LI.flex item.-center gap-3 rounded-2xl border border-background/15 bg-background/5",
+        "tag": "LI",
+        "id": null,
+        "cls": "flex items-center gap-3 rounded-2xl border border-background/15 bg-background/5 px-4 py-3",
+        "rect": {
+          "l": 809.3,
+          "t": 2629.7,
+          "r": 1271,
+          "b": 2675.7,
+          "w": 461.8,
+          "h": 46
+        },
+        "farRight": -169,
+        "farLeft": -809.3,
+        "farBottom": 1775.7,
+        "farTop": -2629.7,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "HTML > BODY > DIV#root > DIV.min-h-.creen bg-background text-foreground > SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.ab.olute -right-24 -top-24 h-72 w-72 rounded-full opacity-30 blur-3xl",
+        "tag": "DIV",
+        "id": null,
+        "cls": "absolute -right-24 -top-24 h-72 w-72 rounded-full opacity-30 blur-3xl",
+        "rect": {
+          "l": 1143,
+          "t": 2408.2,
+          "r": 1431,
+          "b": 2696.2,
+          "w": 288,
+          "h": 288
+        },
+        "farRight": -9,
+        "farLeft": -1143,
+        "farBottom": 1796.2,
+        "farTop": -2408.2,
+        "pos": "absolute",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "BODY > DIV#root > DIV.min-h-.creen bg-background text-foreground > SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > DIV",
+        "tag": "DIV",
+        "id": null,
+        "cls": "",
+        "rect": {
+          "l": 169,
+          "t": 2568.2,
+          "r": 769.3,
+          "b": 2795.2,
+          "w": 600.3,
+          "h": 227
+        },
+        "farRight": -670.8,
+        "farLeft": -169,
+        "farBottom": 1895.2,
+        "farTop": -2568.2,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "DIV#root > DIV.min-h-.creen bg-background text-foreground > SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > DIV > H2.mt-4 font-di.play text-4xl font-bold leading-tight md:text-5xl",
+        "tag": "H2",
+        "id": null,
+        "cls": "mt-4 font-display text-4xl font-bold leading-tight md:text-5xl",
+        "rect": {
+          "l": 169,
+          "t": 2611.2,
+          "r": 769.3,
+          "b": 2731.2,
+          "w": 600.3,
+          "h": 120
+        },
+        "farRight": -670.8,
+        "farLeft": -169,
+        "farBottom": 1831.2,
+        "farTop": -2611.2,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "DIV#root > DIV.min-h-.creen bg-background text-foreground > SECTION#privacy.mx-auto max-w-7xl px-6 py-24 > DIV.relative overflow-hidden rounded-[2rem] border border-border bg-foreground p-10 > DIV.relative grid gap-10 md:grid-col.-[1.3fr_1fr] md:item.-center > UL..pace-y-3 text-.m > LI.flex item.-center gap-3 rounded-2xl border border-background/15 bg-background/5",
+        "tag": "LI",
+        "id": null,
+        "cls": "flex items-center gap-3 rounded-2xl border border-background/15 bg-background/5 px-4 py-3",
+        "rect": {
+          "l": 809.3,
+          "t": 2571.7,
+          "r": 1271,
+          "b": 2617.7,
+          "w": 461.8,
+          "h": 46
+        },
+        "farRight": -169,
+        "farLeft": -809.3,
+        "farBottom": 1717.7,
+        "farTop": -2571.7,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      },
+      {
+        "path": "HTML > BODY > DIV#root > DIV.min-h-.creen bg-background text-foreground > FOOTER.border-t border-border/60 bg-background > DIV.mx-auto flex max-w-7xl flex-col item.-center ju.tify-between gap-6 px-6 py-10 m",
+        "tag": "DIV",
+        "id": null,
+        "cls": "mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-6 py-10 md:flex-row",
+        "rect": {
+          "l": 80,
+          "t": 2933.2,
+          "r": 1360,
+          "b": 3041.2,
+          "w": 1280,
+          "h": 108
+        },
+        "farRight": -80,
+        "farLeft": -80,
+        "farBottom": 2141.2,
+        "farTop": -2933.2,
+        "pos": "static",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "transform": "none"
+      }
+    ],
+    "bodyKids": [
+      {
+        "tag": "DIV",
+        "id": "root",
+        "cls": "",
+        "rect": {
+          "l": 0,
+          "t": 0,
+          "r": 1440,
+          "b": 900,
+          "w": 1440,
+          "h": 900
+        },
+        "pos": "static",
+        "overflow": "visible"
+      }
+    ],
+    "viewport": {
+      "w": 1440,
+      "h": 900
+    }
+  }
+}

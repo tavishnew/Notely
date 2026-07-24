@@ -1,0 +1,12 @@
+{
+  "name": "notely-backend",
+  "private": true,
+  "version": "0.1.3",
+  "type": "module",
+  "description": "Notely Backend — Native Node.js HTTP server with Ollama provisioning and YouTube extraction",
+  "scripts": {
+    "start": "node standalone.mjs",
+    "dev": "node --watch standalone.mjs"
+  },
+  "dependencies": {}
+}

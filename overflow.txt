@@ -1,0 +1,11 @@
+(node:28332) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/tavis/Desktop/Notely/overflow-detect.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to C:\Users\tavis\Desktop\Notely\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+no result top keys: [ 'type', 'value' ]
+full: {
+  "id": 7,
+  "result": {
+    "result": {
+      "type": "string",
+      "value": "__DONE__:%5B%22%7B%5C%22stage%5C%22%3A%5C%22dims%5C%22%2C%5C%22inner%5C%22%3A%5B1440%2C900%5D%2C%5C%22docScroll%5C%22%3A%5B1440%2C3041%5D%2C%5C%22bodyScroll%5C%22%3A%5B1440%2C3041%5D%2C%5C%22htmlHScroll%5C%22%3Afalse%2C%5C%22bodyHScroll%5C%22%3Afalse%2C%5C%22htmlVScroll%5C%22%3Atrue%2C%5C%22bodyVScroll%5C%22%3Atrue%2C%5C%22route%5C%22%3A%5C%22%2F%5C%22%7D%22%2C%22%7B%5C%22stage%5C%22%3A%5C%22overflowing%5C%22%2C%5C%22viewportW%5C%22%3A1440%2C%5C%22viewportH%5C%22%3A900%2C%5C%22count%5C%22%3A157%2C%5C%22top%5C%22%3A%5B%7B%5C%22path%5C%22%3A%5C%22DIV%23root%20%3E%20DIV.min-h-.creen%20bg-background%20text-foreground%20%3E%20FOOTER.border-t%20border-border%2F60%20bg-background%20%3E%20DIV.mx-auto%20flex%20max-w-7xl%20flex-col%20item.-center%20ju.tify-between%20gap-6%20px-6%20py-10%20m%20%3E%20DIV.flex%20item.-center%20gap-2.5%20%3E%20svg%20%3E%20rect%5C%22%2C%5C%22tag%5C%22%3A%5C%22rect%5C%22%2C%5C%22id%5C%22%3Anull%2C%5C%22cls%5C%22%3A%5C%22%5C%22%2C%5C%22rect%5C%22%3A%7B%5C%22l%5C%22%3A111%2C%5C%22t%5C%22%3A2976%2C%5C%22r%5C%22%3A112.4%2C%5C%22b%5C%22%3A2998.4%2C%5C%22w%5C%22%3A1.4%2C%5C%22h%5C%22%3A22.4%7D%2C%5C%22farRight%5C%22%3A-1327.6%2C%5C%22farLeft%5C%22%3A-111%2C%5C%22farBottom%5C%22%3A2098.4%2C%5C%22farTop%5C%22%3A-2976%2C%5C%22pos%5C%22%3A%5C%22static%5C%22%2C%5C%22overflow%5C%22%3A%5C%22visible%5C%22%2C%5C%22overflowX%5C%22%3A%5C%22visible%5C%22%2C%5C%22overflowY%5C%22%3A%5C%22visible%

@@ -30,3 +30,5 @@ target
 release/
 # private UI reference material - never commit
 docs/ui-reference/
+
+lovable/.workspace/
