@@ -78,6 +78,29 @@ async function handleApi(req, res, url, opts) {
   if (p === "/api/youtube-extract") {
     const target = url.searchParams.get("url");
     if (!target) return sendJson(res, 400, { error: "missing url parameter" });
+
+    // Validate that the URL is actually a YouTube URL
+    let targetUrl;
+    try {
+      targetUrl = new URL(target);
+    } catch {
+      return sendJson(res, 400, { error: "invalid url" });
+    }
+    const allowedHosts = ["youtube.com", "www.youtube.com", "m.youtube.com", "youtu.be"];
+    if (!allowedHosts.includes(targetUrl.hostname)) {
+      return sendJson(res, 400, { error: "url must be a YouTube URL" });
+    }
+
+    // Origin check to prevent localhost CSRF
+    const origin = req.headers.origin;
+    const referer = req.headers.referer;
+    if (origin && !origin.startsWith(opts.appOrigin)) {
+      return sendJson(res, 403, { error: "forbidden origin" });
+    }
+    if (referer && !referer.startsWith(opts.appOrigin)) {
+      return sendJson(res, 403, { error: "forbidden referer" });
+    }
+
     try {
       const result = await extractYoutube(target, opts.binDir);
       return sendJson(res, 200, result);

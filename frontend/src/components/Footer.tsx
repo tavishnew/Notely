@@ -7,7 +7,7 @@ export function Footer() {
         <div className="flex items-center gap-2.5">
           <NotelyLogo className="h-7 w-7" />
           <span className="font-display font-semibold">Notely</span>
-          <span className="text-sm text-muted-foreground">"” notes that stick.</span>
+          <span className="text-sm text-muted-foreground">— notes that stick.</span>
         </div>
         <p className="text-xs text-muted-foreground">
           © {new Date().getFullYear()} Notely. Local-first, AGPL licensed.
