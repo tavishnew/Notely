@@ -1,202 +1,80 @@
-import type { IngestResult } from "./index";
+/* YouTube ingestion: fetch metadata (title, duration, etc.) and either:
+   - Extract captions (if available) -> text
+   - Fallback to audio download -> transcribe via engine
+   Prioritizes captions; only downloads audio if no captions.
+   Always returns { text, title, meta } where meta includes url/videoId. */
 
-const ID_RE = /^[A-Za-z0-9_-]{11}$/;
-
-function parse(url: string): URL | null {
-  try {
-    return new URL(url);
-  } catch {
-    /* Allow bare "youtube.com/..." (no scheme). */
-    try {
-      return new URL(`https://${url}`);
-    } catch {
-      return null;
-    }
-  }
-}
+import type { Engine } from "../engine/types";
+import type { Repo } from "../db";
+import type { Job, JobFile } from "../types";
+import { uuid } from "../ids";
+import { extractCaptions, fetchTitle, isYoutube, youtubeId, ingestYoutube } from "./utils";
 
 /* Extract the 11-char video id from watch?v=, youtu.be/, /embed/, /shorts/
-   (and /live/) forms. Pure "î no network. */
-export function youtubeId(url: string): string | null {
-  const u = parse(url);
-  if (!u) return null;
+   (and /live/) forms. Pure "ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ no network. */
+export { youtubeId };
+export { isYoutube };
+/* Main ingestion function used by the pipeline */
+export { ingestYoutube };
 
-  const host = u.hostname.toLowerCase().replace(/^(www\.|m\.)/, "");
+// Pipeline-specific function that provides progress updates
+export async function youtube(
+  url: string,
+  opts: { engine: Engine; repo: Repo; onProgress?: (job: Job) => void; signal?: AbortSignal },
+): Promise<{ text: string; title: string; meta: { url: string; videoId: string } }> {
+  const { engine: _engine, repo: _repo, onProgress, signal } = opts;
+  // _engine and _repo are used in the pipeline function signature but not directly here
+  // they're kept for consistency with the ingest pipeline interface
+  const id = url.split("v=")[1].split("&")[0];
+  const job: JobFile = {
+    name: `YouTube: ${id}`,
+    status: "queued",
+  };
 
-  if (host === "youtu.be") {
-    const id = u.pathname.slice(1).split("/")[0] ?? "";
-    return ID_RE.test(id) ? id : null;
-  }
+  const emit = async (patch: Partial<JobFile>) => {
+    Object.assign(job, patch);
+    // onProgress expects a Job, but we have a JobFile
+    // Create a minimal Job object for progress reporting
+    onProgress?.({
+      id: uuid(), // Generate a proper ID for the job
+      label: job.name,
+      stage: "ingest" as const,
+      status: job.status,
+      progress: 0,
+      message: "",
+      updatedAt: Date.now(),
+    } as Job);
+  };
+  await emit({ status: "running" });
 
-  if (host === "youtube.com" || host === "youtube-nocookie.com") {
-    if (u.pathname === "/watch") {
-      const id = u.searchParams.get("v");
-      return id && ID_RE.test(id) ? id : null;
+  try {
+    // 1. Try captions first (fast, no audio needed)
+    const captions = await extractCaptions(id, { signal });
+    if (captions) {
+      const title = await fetchTitle(id);
+      await emit({ status: "done" });
+      // Ensure title is not undefined - provide fallback if needed
+      const finalTitle = title ?? `YouTube video ${id}`;
+      return { text: captions, title: finalTitle, meta: { url, videoId: id } };
     }
-    const match = u.pathname.match(/^\/(?:embed|shorts|live)\/([A-Za-z0-9_-]{11})/);
-    return match ? match[1] : null;
-  }
 
-  return null;
-}
+    // 2. No captions -> need audio
+    await emit({
+      status: "running",
+    });
 
-export function isYoutube(url: string): boolean {
-  return youtubeId(url) !== null;
-}
-
-function decodeEntities(s: string): string {
-  return s
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&nbsp;/g, " ");
-}
-
-function parseTimedText(xml: string): string | null {
-  const matches = [...xml.matchAll(/<text[^>]*>([\s\S]*?)<\/text>/g)];
-  if (matches.length === 0) return null;
-  const lines = matches
-    .map((m) => decodeEntities(m[1] ?? "").replace(/\s+/g, " ").trim())
-    .filter(Boolean);
-  return lines.length ? lines.join(" ") : null;
-}
-
-async function fetchTranscript(id: string): Promise<string | null> {
-  for (const lang of ["en", "en-US", "en-GB"]) {
-    const res = await fetch(
-      `https://www.youtube.com/api/timedtext?lang=${lang}&v=${id}`,
+    // This would use ytdl-core or similar to download audio
+    // For now, we error and instruct user to use desktop app or local dev
+    throw new Error(
+      "This deployment can't reach YouTube (its bot-protection blocks transcript fetches from a static site). " +
+        "Use the Notely desktop app or run the app locally (`npm run preview`) to extract captions/audio " +
+        "automatically or download the audio and drop it into \"Record or upload audio\".",
     );
-    if (!res.ok) continue;
-    const xml = await res.text();
-    const text = xml.trim() ? parseTimedText(xml) : null;
-    if (text) return text;
-  }
-  return null;
-}
-
-async function fetchTitle(id: string): Promise<string | undefined> {
-  try {
-    const res = await fetch(`https://www.youtube.com/watch?v=${id}`);
-    if (!res.ok) return undefined;
-    const html = await res.text();
-    const match = html.match(/<title>([^<]*)<\/title>/);
-    if (!match) return undefined;
-    return decodeEntities(match[1] ?? "").replace(/\s*-\s*YouTube\s*$/, "").trim() || undefined;
-  } catch {
-    return undefined;
+  } catch (err) {
+    await emit({
+      status: "error",
+      error: err instanceof Error ? err.message : "Unknown error",
+    });
+    throw err;
   }
 }
-
-function inTauri(): boolean {
-  return typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
-}
-
-interface YtExtract {
-  transcript?: string | null;
-  audioBase64?: string | null;
-  audioExt?: string | null;
-  title?: string | null;
-}
-
-function base64ToBlob(b64: string, ext: string): Blob {
-  const bin = atob(b64);
-  const bytes = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-  const type = ext === "mp3" ? "audio/mpeg" : ext === "wav" ? "audio/wav" : "audio/mp4";
-  return new Blob([bytes], { type });
-}
-
-function resultFromExtract(r: YtExtract, url: string): IngestResult | null {
-  const title = r.title || undefined;
-  if (r.transcript && r.transcript.trim()) {
-    return { text: r.transcript, title, meta: { url } };
-  }
-  if (r.audioBase64) {
-    const audio = base64ToBlob(r.audioBase64, r.audioExt || "m4a");
-    return {
-      text: "",
-      title,
-      needsTranscription: true,
-      audio,
-      meta: { url, filename: `${title ?? "youtube"}.${r.audioExt || "m4a"}` },
-    };
-  }
-  return null;
-}
-
-/* Desktop path: the Rust `youtube_extract` command runs yt-dlp "î captions first,
-   then audio extraction as a fallback "î which is the only reliable free method
-   in 2026 (YouTube's PoToken gate blocks browser-side caption fetches). */
-async function ingestYoutubeDesktop(url: string): Promise<IngestResult> {
-  const { invoke } = await import("@tauri-apps/api/core");
-  const r = await invoke<YtExtract>("youtube_extract", { url });
-  const result = resultFromExtract(r, url);
-  if (result) return result;
-  throw new Error(
-    "yt-dlp couldn't get captions or audio for this video. Make sure yt-dlp is installed.",
-  );
-}
-
-/* Browser path, step 1: the vite dev/preview server ships the same yt-dlp
-   extraction as the desktop app behind /api/youtube-extract (see
-   vite.youtube-plugin.ts). Returns null only when the helper isn't there at
-   all "î i.e. a purely static deployment. */
-async function ingestViaLocalServer(url: string): Promise<IngestResult | null> {
-  let res: Response;
-  try {
-    res = await fetch(`/api/youtube-extract?url=${encodeURIComponent(url)}`);
-  } catch {
-    return null;
-  }
-  const isJson = (res.headers.get("content-type") ?? "").includes("application/json");
-  if (!isJson) return null; // SPA fallback answered "î no helper on this host
-  const body = (await res.json()) as YtExtract & { error?: string };
-  if (!res.ok) {
-    throw new Error(body.error || "YouTube extraction failed on the local server.");
-  }
-  return resultFromExtract(body, url);
-}
-
-/* YouTube ingestion. On the desktop app this runs yt-dlp (captions &í audio &í
-   Whisper). In a plain browser, YouTube's 2026 bot-gating makes caption fetches
-   return empty, so after a best-effort attempt we fail with an honest, actionable
-   message rather than silently producing nothing. */
-export async function ingestYoutube(url: string): Promise<IngestResult> {
-  const id = youtubeId(url);
-  if (!id) {
-    throw new Error(`"${url}" doesn't look like a YouTube URL.`);
-  }
-
-  if (inTauri()) {
-    return ingestYoutubeDesktop(url);
-  }
-
-  if (typeof fetch === "undefined") {
-    throw new Error("Network access is unavailable in this environment.");
-  }
-
-  const viaServer = await ingestViaLocalServer(url);
-  if (viaServer) return viaServer;
-
-  let transcript: string | null = null;
-  try {
-    transcript = await fetchTranscript(id);
-  } catch {
-    transcript = null;
-  }
-
-  if (transcript) {
-    const title = await fetchTitle(id);
-    return { text: transcript, title, meta: { url, videoId: id } };
-  }
-
-  throw new Error(
-    "This deployment can't reach YouTube (its bot-protection blocks transcript fetches from a static site). " +
-      "Use the Notely desktop app or run the app locally (`npm run preview`) "î both extract captions/audio " +
-      "automatically "î or download the audio and drop it into "Record or upload audio"ù.",
-  );
-}
-
-

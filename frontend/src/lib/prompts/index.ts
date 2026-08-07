@@ -21,11 +21,11 @@ export function noteSystem(language: string): string {
     "- Use blockquote callouts `> [!note]` for important definitions or warnings.",
     "- Render math with KaTeX: inline `$x^2$`, display `$$...$$`. Preserve all",
     "  formulas, symbols, and code exactly.",
-    "- Genuinely synthesize and explain "” do NOT merely reorder the source.",
+    "- Genuinely synthesize and explain - do NOT merely reorder the source.",
     "- End with a `## Key Takeaways` list.",
     "- Produce the COMPLETE notes. Never truncate or add a paywall.",
     `- Write in ${language}.`,
-    "Output ONLY the raw Markdown notes "” no preamble, and do NOT wrap the whole",
+    "Output ONLY the raw Markdown notes - no preamble, and do NOT wrap the whole",
     "response in a ``` code fence.",
   ].join("\n");
 }
@@ -44,7 +44,7 @@ export function noteSectionSystem(
     `You are writing study notes for section ${part} of ${total} of a longer`,
     "document. Produce clear, well-structured Markdown notes for THIS section",
     "only. Use ## and ### headings, bullet lists, **bold** key terms, tables, and",
-    "KaTeX math ($"..$, $$"..$$) where relevant. Genuinely explain "” do not just",
+    'KaTeX math ($..$, $$..$$) where relevant. Genuinely explain - do not just',
     "restate. Do NOT add an overall introduction, overview, or conclusion; those",
     `are added once at the end. Write in ${language}. Output only the Markdown.`,
   ].join("\n");
@@ -75,8 +75,8 @@ export function titleUser(text: string): string {
 /* ---- Flashcards (two-phase) --------------------------------------------- */
 
 export const topicsSystem =
-  "You identify the main study topics in source material. Return 4"“8 concise " +
-  "topic labels (2"“4 words each) that together cover the material.";
+  "You identify the main study topics in source material. Return 4-8 concise " +
+  "topic labels (2-4 words each) that together cover the material.";
 
 export const topicsSchema = {
   type: "object",
@@ -94,7 +94,7 @@ export function flashcardsSystem(topics: string[]): string {
     "back is a complete, self-contained answer. Prefer active recall over",
     "recognition. Tag each card with the single most relevant topic from this",
     `list: ${topics.join(", ")}.`,
-    "Create thorough coverage "” aim for 2"“4 cards per topic.",
+    "Create thorough coverage - aim for 2-4 cards per topic.",
   ].join("\n");
 }
 
@@ -180,7 +180,7 @@ export function chatSystem(noteTitle: string, sourceText: string): string {
     `You are a study assistant helping with the document "${noteTitle}".`,
     "Answer questions using the source material below. Be clear and concise, and",
     "use Markdown (headings, lists, **bold**) when helpful. For ANY math, symbols,",
-    "or formulas, use KaTeX delimiters "” inline `$E = mc^2$` and display `$$"..$$` "”",
+    "or formulas, use KaTeX delimiters - inline `$E = mc^2$` and display `$$..$$` -",
     "never plain parentheses like ( F ). If the answer is not in the material, say",
     "so plainly rather than guessing. Do not add source citations.",
     "",
@@ -206,7 +206,7 @@ export function podcastSystem(length: "short" | "medium" | "long"): string {
     "good questions. Natural, engaging, accurate. Cover the key ideas.",
     `Aim for about ${lines} turns total.`,
     "For EACH line also provide a `spoken` field: the same content rewritten for",
-    "text-to-speech "” expand abbreviations, spell out symbols and equations in",
+    "text-to-speech - expand abbreviations, spell out symbols and equations in",
     "words, and phonetically respell hard/foreign/technical terms so a TTS voice",
     "pronounces them correctly (e.g. 'DLENA' -> 'duh-LAY-nuh'). The `text` field",
     "keeps the original readable version.",
@@ -233,5 +233,3 @@ export const podcastSchema = {
     },
   },
 } as const;
-
-

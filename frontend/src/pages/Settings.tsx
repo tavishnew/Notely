@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import {
-  Camera,
   CheckCircle2,
   Copy,
   Cpu,
   Download,
-  Globe,
   KeyRound,
   Pencil,
   Settings as SettingsIcon,
@@ -53,6 +51,13 @@ export default function Settings() {
   const [msg, setMsg] = useState("");
   const [localSetup, setLocalSetup] = useState(false);
   const provider = detectProvider(key.trim());
+  const [avatar, setAvatar] = useState('N');
+  const avatars = ['N', '���😀', '���🚀', '���🎉', '���🔥'];
+  const cycleAvatar = () => {
+    const idx = avatars.indexOf(avatar);
+    const nextIdx = (idx + 1) % avatars.length;
+    setAvatar(avatars[nextIdx]);
+  };
 
   useEffect(() => {
     loadApiKey().then(setKey);
@@ -60,8 +65,8 @@ export default function Settings() {
 
   function setMode(mode: EngineMode) {
     if (mode === "local") {
-      // Switching to local provisions Ollama the same way onboarding does �
-      // install/start/pull as needed � before the engine is used.
+      // Switching to local provisions Ollama the same way onboarding does ��� �
+      // install/start/pull as needed ��� � before the engine is used.
       void localSetupStatus().then((s) => {
         const ready = s?.serving && s.hasChatModel && s.hasEmbedModel;
         if (s && !ready) {
@@ -101,7 +106,7 @@ export default function Settings() {
   }
 
   async function updateLanguage(langCode: string) {
-    savePrefs({ ...prefs, language: langCode, locale: langCode });
+    savePrefs({ ...prefs, language: langCode });
   }
 
   return (
@@ -122,9 +127,12 @@ export default function Settings() {
               </div>
               <button
                 className="absolute -bottom-1 -left-1 rounded-full border border-edge bg-card p-1.5 text-ink-dim shadow-soft hover:text-ink"
+                onClick={cycleAvatar}
                 aria-label="Change avatar"
               >
-                <Camera className="size-3.5" />
+                <span className="flex size-20 items-center justify-center rounded-full border-4 border-card bg-accent-softer font-display text-2xl font-bold text-accent">
+                  {avatar}
+                </span>
               </button>
             </div>
             <div className="mt-3 flex items-center gap-2">
@@ -132,7 +140,7 @@ export default function Settings() {
               <Pencil className="size-3.5 text-ink-faint" />
             </div>
             <span className="text-sm text-ink-faint">
-              Local account � nothing leaves this device
+              Local account ��� � nothing leaves this device
             </span>
 
             <div className="mt-5 w-full space-y-3">
@@ -264,7 +272,7 @@ export default function Settings() {
               Your data
             </h2>
             <p className="mt-1 text-sm text-ink-faint">
-              Notely is free and open source (AGPL-3.0). Your notes are yours �
+              Notely is free and open source (AGPL-3.0). Your notes are yours ��� �
               export any single note as Markdown, PDF, or Word from its menu, or
               export everything at once here. Nothing is ever locked behind a paywall.
             </p>

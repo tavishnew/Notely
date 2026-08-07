@@ -221,17 +221,15 @@ function EditorView({
       )}
 
       {historyOpen && (
-        <VersionHistoryModal note={note} onClose={() => setHistoryOpen(false)} />
+        <VersionHistoryModal onClose={() => setHistoryOpen(false)} />
       )}
     </div>
   );
 }
 
 function VersionHistoryModal({
-  note,
   onClose,
 }: {
-  note: Note;
   onClose: () => void;
 }) {
   return (

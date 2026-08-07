@@ -2,7 +2,6 @@
   "name": "notely",
   "private": true,
   "version": "0.1.3",
-  "main": "electron/main.mjs",
   "workspaces": [
     "frontend",
     "backend"
@@ -13,25 +12,16 @@
     "dev:backend": "npm run dev --workspace=backend",
     "build": "npm run build --workspace=frontend",
     "build:frontend": "npm run build --workspace=frontend",
+    "prepare": "npm run build --workspace=frontend",
     "start": "npm run start --workspace=backend",
     "serve": "npm run start --workspace=backend",
     "test": "npm run test --workspace=frontend",
     "test:frontend": "npm run test --workspace=frontend",
     "typecheck": "npm run typecheck --workspace=frontend",
-    "typecheck:frontend": "npm run typecheck --workspace=frontend",
-    "app": "npm run build && electron .",
-    "app:nobuild": "electron .",
-    "dist": "npm run build && electron-builder -c electron-builder.cjs",
-    "dist:mac": "npm run build && electron-builder -c electron-builder.cjs --mac",
-    "dist:win": "npm run build && electron-builder -c electron-builder.cjs --win",
-    "tauri": "npm run tauri --prefix frontend"
+    "typecheck:frontend": "npm run typecheck --workspace=frontend"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^2",
-    "@vitejs/plugin-react": "^4.6.0",
     "concurrently": "^9.1.0",
-    "electron": "^43.1.1",
-    "electron-builder": "^26.15.3",
     "eslint-plugin-jsx-a11y": "^6.10.2"
   },
   "engines": {

@@ -106,7 +106,7 @@ export default function Landing() {
             {[
               { n: "01", t: "Drop it in", d: "Paste a link, upload a PDF, or record audio right in the app." },
               { n: "02", t: "Notely reads it", d: "We transcribe, chunk, and structure your material into clean notes." },
-              { n: "03", t: "You remember it", d: "Flashcards, quizzes and podcast recaps "” tuned to what you keep missing." },
+              { n: "03", t: "You remember it", d: "Flashcards, quizzes and podcast recaps - tuned to what you keep missing." },
             ].map((step, i) => (
               <motion.div
                 key={step.n}
@@ -149,7 +149,7 @@ export default function Landing() {
               </h2>
               <p className="mt-4 max-w-xl text-background/70">
                 Notely runs local models by default and stores everything in your
-                browser "” no accounts, no trackers, no lock-in.
+                browser - no accounts, no trackers, no lock-in.
               </p>
             </div>
             <ul className="space-y-3 text-sm">
@@ -196,7 +196,7 @@ function BentoGrid() {
             <BrainCircuit className="h-7 w-7 text-primary" />
             <h3 className="mt-4 font-display text-2xl font-bold">Notes that write themselves</h3>
             <p className="mt-2 max-w-md text-muted-foreground">
-              Structured outlines, headings, and key takeaways "” extracted from any
+              Structured outlines, headings, and key takeaways - extracted from any
               source in seconds, editable like a real doc.
             </p>
           </div>
@@ -229,7 +229,7 @@ function BentoGrid() {
         <MessageSquare className="h-6 w-6 text-primary" />
         <h3 className="mt-3 font-display text-xl font-bold">Ask your notes anything</h3>
         <p className="mt-1 text-sm text-muted-foreground">
-          A chat assistant grounded in your library "” with citations.
+          A chat assistant grounded in your library ï¿½ï¿½ï¿½ ï¿½ with citations.
         </p>
         <ChatMock />
       </motion.div>
@@ -239,7 +239,7 @@ function BentoGrid() {
         <Check className="h-6 w-6 text-primary" />
         <h3 className="mt-3 font-display text-xl font-bold">Adaptive quizzes</h3>
         <p className="mt-1 text-sm text-muted-foreground">
-          We track what you miss and quiz you on it again "” until you don't.
+          We track what you miss and quiz you on it again ï¿½ï¿½ï¿½ ï¿½ until you don't.
         </p>
         <QuizMock />
       </motion.div>
@@ -320,7 +320,7 @@ function ChatMock() {
         Summarize chapter 4 in 3 bullets
       </div>
       <div className="max-w-[85%] rounded-2xl rounded-bl-sm bg-secondary px-3 py-2 text-sm">
-        Sure "” pulling from your PDF and the lecture recording"..
+        Sure - pulling from your PDF and the lecture recording".
       </div>
     </div>
   );
@@ -353,4 +353,3 @@ function QuizMock() {
     </div>
   );
 }
-

@@ -11,7 +11,7 @@ import type { EngineMode } from "../lib/types";
 export default function Onboarding() {
   const navigate = useNavigate();
   const { savePrefs } = useApp();
-  /* No default "� the user must make an explicit choice. */
+  /* No default "�� the user must make an explicit choice. */
   const [mode, setMode] = useState<EngineMode | null>(null);
   const [apiKey, setApiKey] = useState("");
   const [busy, setBusy] = useState(false);
@@ -54,7 +54,7 @@ export default function Onboarding() {
         How do you want your AI to run?
       </h1>
       <p className="mt-2 max-w-lg text-center text-ink-dim">
-        Pick the engine that fits you. There's no wrong answer "� you can switch
+        Pick the engine that fits you. There's no wrong answer - you can switch
         anytime in Settings.
       </p>
 
@@ -64,7 +64,7 @@ export default function Onboarding() {
           onClick={() => setMode("local")}
           icon={Cpu}
           title="Fully local"
-          body="Everything runs on this device "� private, offline, zero cost. Best for privacy; long lectures and quiz distractors are a little weaker than cloud. Downloads models on first use."
+          body="Everything runs on this device - private, offline, zero cost. Best for privacy; long lectures and quiz distractors are a little weaker than cloud. Downloads models on first use."
         />
         <ModeCard
           active={mode === "cloud"}
@@ -151,5 +151,3 @@ function ModeCard({
     </button>
   );
 }
-
-

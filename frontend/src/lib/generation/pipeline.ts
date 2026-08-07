@@ -67,7 +67,7 @@ export async function createNoteFromSources(
     file.status = "running";
     await emit({
       stage: "ingest",
-      message: `Processing ${file.name}"..`,
+      message: `Processing ${file.name}..`,
       progress: (i + 0.2) / (inputs.length + 1),
     });
     try {
@@ -76,12 +76,12 @@ export async function createNoteFromSources(
       if (res.needsTranscription && res.audio) {
         if (engine.mode === "cloud" && res.audio.size > 24 * 1024 * 1024) {
           throw new Error(
-            "This audio is over 24 MB "� larger than the cloud transcription limit. " +
+            "This audio is over 24 MB - larger than the cloud transcription limit. " +
               "Use local transcription, or split it into shorter clips.",
           );
         }
         file.status = "running";
-        await emit({ stage: "transcribe", message: `Transcribing ${file.name}"..` });
+        await emit({ stage: "transcribe", message: `Transcribing ${file.name}..` });
         const tr = await engine.transcribe(res.audio, opts.signal);
         text = tr.text;
       }
@@ -161,10 +161,8 @@ export async function reconcileJobs(repo: Repo): Promise<void> {
   const active = await repo.activeJobs();
   for (const j of active) {
     j.status = "error";
-    j.message = "Interrupted "� please retry.";
+    j.message = "Interrupted - please retry.";
     j.updatedAt = now();
     await repo.putJob(j);
   }
 }
-
-
