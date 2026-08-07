@@ -1,7 +1,7 @@
-/* Run the local server without Electron: `node server/standalone.mjs`.
- * Serves the built dist/ plus the native-helper endpoints. Useful for
- * developers, headless testing, or anyone who'd rather open the app in their
- * own browser than in the desktop shell. */
+/* Run the local server without Electron: `npm run serve` (or
+ * `node backend/standalone.mjs`). Serves the built frontend/dist/ plus the
+ * native-helper endpoints. Useful for developers, headless testing, or anyone
+ * who'd rather open the app in their own browser than in the desktop shell. */
 
 import path from "node:path";
 import { fileURLToPath } from "node:url";

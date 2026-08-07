@@ -7,12 +7,16 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies & build output
 node_modules
 dist
+frontend/dist
 dist-ssr
 *.local
+release/
+target
 
-# Editor directories and files
+# Editor / OS
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -22,13 +26,19 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-node_modules
-dist
-target
-.DS_Store
-# electron-builder output
-release/
-# private UI reference material - never commit
-docs/ui-reference/
 
+# Scratch / debug artifacts
+overflow*
+temp.css
+mem.md
+*.pid
+*.out
+
+# Private reference material
+docs/ui-reference/
 lovable/.workspace/
+
+# Env
+.env
+.env.*
+!.env.example

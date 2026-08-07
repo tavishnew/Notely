@@ -15,9 +15,11 @@ import {
   clearApiKey,
   detectProvider,
   loadApiKey,
+  providerLabel,
   saveApiKey,
 } from "../lib/engine/keys";
-import { createEngine } from "../lib/engine";
+import { createEngine, NVIDIA_MODELS } from "../lib/engine";
+import type { Provider } from "../lib/types";
 import { localSetupStatus } from "../lib/localSetup";
 import LocalSetupModal from "../components/LocalSetupModal";
 import { exportMarkdown, downloadText } from "../lib/export";
@@ -78,10 +80,18 @@ export default function Settings() {
     setMsg("");
     try {
       const p = detectProvider(key.trim());
-      if (!p) throw new Error("Key must start with sk- (OpenAI) or sk-ant- (Anthropic).");
+      if (!p) {
+        throw new Error(
+          "Key must start with sk- (OpenAI), sk-ant- (Anthropic), or nvapi- (NVIDIA).",
+        );
+      }
       await createEngine({ mode: "cloud", provider: p, apiKey: key.trim() }).validate();
       await saveApiKey(key.trim());
-      savePrefs({ ...prefs, mode: "cloud" });
+      const cloudModel =
+        prefs.cloudModel && cloudModelsFor(p).includes(prefs.cloudModel)
+          ? prefs.cloudModel
+          : "";
+      savePrefs({ ...prefs, mode: "cloud", cloudModel });
       setStatus("saved");
       setTimeout(() => setStatus("idle"), 2500);
     } catch (e) {
@@ -173,15 +183,35 @@ export default function Settings() {
                     type="password"
                     value={key}
                     onChange={(e) => setKey(e.target.value)}
-                    placeholder="sk-... (OpenAI) or sk-ant-... (Anthropic) � auto-detected"
+                    placeholder="sk-... / sk-ant-... / nvapi-... — auto-detected"
                     className="w-full bg-transparent text-sm outline-none placeholder:text-ink-faint"
                   />
                   {provider && (
                     <span className="shrink-0 rounded-full bg-accent-softer px-2.5 py-1 text-xs font-bold text-accent">
-                      {provider === "anthropic" ? "Anthropic" : "OpenAI"}
+                      {providerLabel(provider)}
                     </span>
                   )}
                 </div>
+                {provider && (
+                  <div className="mt-3">
+                    <label className="text-sm font-semibold text-ink-dim">Model</label>
+                    <select
+                      value={prefs.cloudModel ?? ""}
+                      onChange={(e) =>
+                        savePrefs({ ...prefs, cloudModel: e.target.value })
+                      }
+                      className="mt-1.5 w-full rounded-xl border border-edge bg-panel px-3 py-2.5 text-sm font-semibold outline-none focus:border-accent"
+                      aria-label="Cloud model"
+                    >
+                      <option value="">Provider default</option>
+                      {cloudModelsFor(provider).map((m) => (
+                        <option key={m} value={m}>
+                          {m}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
                 <div className="mt-3 flex items-center gap-3">
                   <button
                     onClick={saveKey}
@@ -271,6 +301,23 @@ export default function Settings() {
       )}
     </div>
   );
+}
+
+const OPENAI_MODELS = ["gpt-4o", "gpt-4o-mini", "gpt-4o-2024-08-06"] as const;
+const ANTHROPIC_MODELS = [
+  "claude-3-5-sonnet-latest",
+  "claude-3-5-haiku-latest",
+] as const;
+
+function cloudModelsFor(provider: Provider): readonly string[] {
+  switch (provider) {
+    case "openai":
+      return OPENAI_MODELS;
+    case "anthropic":
+      return ANTHROPIC_MODELS;
+    case "nvidia":
+      return NVIDIA_MODELS;
+  }
 }
 
 function LanguageField({

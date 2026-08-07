@@ -13,7 +13,7 @@ export type SourceKind =
   | "url";
 
 export type EngineMode = "local" | "cloud";
-export type Provider = "openai" | "anthropic";
+export type Provider = "openai" | "anthropic" | "nvidia";
 
 /* ---- Notes & content ---------------------------------------------------- */
 

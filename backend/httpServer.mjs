@@ -7,7 +7,7 @@
  *
  * Pure Node built-ins, no framework, so the packaged app stays small and has
  * no extra supply chain. Exported as startServer() so both the Electron main
- * process and a plain `node server/standalone.mjs` can run it.
+ * process and a plain `node backend/standalone.mjs` can run it.
  */
 
 import fs from "node:fs";

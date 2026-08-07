@@ -7,10 +7,12 @@ import type { Engine } from "./types";
 import { EngineError } from "./types";
 import { OpenAIEngine } from "./openai";
 import { AnthropicEngine } from "./anthropic";
+import { NvidiaEngine } from "./nvidia";
 import { LocalEngine } from "./local";
 
 export * from "./types";
-export { detectProvider } from "./keys";
+export { detectProvider, providerLabel } from "./keys";
+export { NVIDIA_MODELS } from "./nvidia";
 
 export interface CreateEngineOptions {
   mode: EngineMode;
@@ -34,8 +36,13 @@ export function createEngine(opts: CreateEngineOptions): Engine {
       return new AnthropicEngine(opts.apiKey, opts.model);
     case "openai":
       return new OpenAIEngine(opts.apiKey, opts.model);
+    case "nvidia":
+      return new NvidiaEngine(opts.apiKey, opts.model);
     default:
-      throw new EngineError("A provider (openai or anthropic) is required for cloud mode.", "unknown");
+      throw new EngineError(
+        "A provider (openai, anthropic, or nvidia) is required for cloud mode.",
+        "unknown",
+      );
   }
 }
 

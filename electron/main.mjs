@@ -8,18 +8,19 @@
  *   4. shuts the server (and any Ollama it started) down on quit
  *
  * Everything the browser can't do — yt-dlp extraction, Ollama provisioning —
- * lives behind that local server (see ../server/). Non-technical users install
+ * lives behind that local server (see ../backend/). Non-technical users install
  * nothing; developers can run the exact same server with `npm run serve`.
  */
 
 import { app, BrowserWindow, shell } from "electron";
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { startServer } from "../server/httpServer.mjs";
+import { startServer } from "../backend/httpServer.mjs";
 import {
   ensureServingIfProvisioned,
   shutdown as shutdownOllama,
-} from "../server/ollama.mjs";
+} from "../backend/ollama.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -29,6 +30,19 @@ let healthTimer = null;
 
 function binDir() {
   return path.join(app.getPath("userData"), "bin");
+}
+
+/* Packaged builds ship frontend/dist as dist/; monorepo dev keeps it under
+   frontend/dist. Prefer whichever has index.html. */
+function resolveDistDir() {
+  const candidates = [
+    path.join(__dirname, "..", "dist"),
+    path.join(__dirname, "..", "frontend", "dist"),
+  ];
+  for (const dir of candidates) {
+    if (fs.existsSync(path.join(dir, "index.html"))) return dir;
+  }
+  return candidates[1];
 }
 
 async function ensureServer() {
@@ -47,7 +61,7 @@ async function ensureServer() {
     serverInfo = null;
   }
   serverInfo = await startServer({
-    distDir: path.join(__dirname, "..", "dist"),
+    distDir: resolveDistDir(),
     binDir: binDir(),
     host: "127.0.0.1",
     port: 0, // OS-assigned free port; avoids clashes with anything on 4173 etc.

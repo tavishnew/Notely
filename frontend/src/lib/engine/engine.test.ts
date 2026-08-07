@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { OpenAIEngine } from "./openai";
 import { AnthropicEngine } from "./anthropic";
+import { NvidiaEngine } from "./nvidia";
 import { LocalEngine } from "./local";
 import { createEngine } from "./index";
 import { EngineError } from "./types";
@@ -275,6 +276,43 @@ describe("LocalEngine", () => {
   });
 });
 
+describe("NvidiaEngine", () => {
+  it("complete() streams tokens against the NIM OpenAI-compatible endpoint", async () => {
+    const chunks = [
+      `data: ${JSON.stringify({ choices: [{ delta: { content: "Hi" } }] })}\n\n`,
+      `data: ${JSON.stringify({ choices: [{ delta: { content: " NIM" } }] })}\n\n`,
+      `data: [DONE]\n\n`,
+    ];
+    const fetchMock = mockFetch(async () => streamResponse(chunks));
+    vi.stubGlobal("fetch", fetchMock);
+
+    const engine = new NvidiaEngine("nvapi-test");
+    const tokens: string[] = [];
+    const text = await engine.complete(
+      { messages: [{ role: "user", content: "hi" }] },
+      (t) => tokens.push(t),
+    );
+
+    expect(text).toBe("Hi NIM");
+    expect(tokens).toEqual(["Hi", " NIM"]);
+    const [url, init] = fetchMock.mock.calls[0];
+    expect(url).toBe("https://integrate.api.nvidia.com/v1/chat/completions");
+    expect((init?.headers as Record<string, string>).Authorization).toBe("Bearer nvapi-test");
+    const body = JSON.parse(init?.body as string);
+    expect(body.model).toBe("nvidia/nemotron-4-340b-instruct");
+    expect(body.stream).toBe(true);
+  });
+
+  it("capabilities() reports chat only", () => {
+    expect(new NvidiaEngine("nvapi-test").capabilities()).toEqual({
+      chat: true,
+      transcription: false,
+      tts: false,
+      embeddings: false,
+    });
+  });
+});
+
 describe("createEngine", () => {
   it("returns the right class per mode/provider", () => {
     expect(createEngine({ mode: "cloud", provider: "openai", apiKey: "sk-x" })).toBeInstanceOf(
@@ -283,6 +321,9 @@ describe("createEngine", () => {
     expect(
       createEngine({ mode: "cloud", provider: "anthropic", apiKey: "sk-ant-x" }),
     ).toBeInstanceOf(AnthropicEngine);
+    expect(
+      createEngine({ mode: "cloud", provider: "nvidia", apiKey: "nvapi-x" }),
+    ).toBeInstanceOf(NvidiaEngine);
     expect(createEngine({ mode: "local" })).toBeInstanceOf(LocalEngine);
   });
 

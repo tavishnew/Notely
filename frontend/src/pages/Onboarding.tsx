@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Cloud, Cpu, KeyRound, PenLine } from "lucide-react";
-import { detectProvider, saveApiKey } from "../lib/engine/keys";
+import { detectProvider, providerLabel, saveApiKey } from "../lib/engine/keys";
 import { getEnginePrefs } from "../lib/prefs";
 import { localSetupStatus } from "../lib/localSetup";
 import LocalSetupModal from "../components/LocalSetupModal";
@@ -71,7 +71,7 @@ export default function Onboarding() {
           onClick={() => setMode("cloud")}
           icon={Cloud}
           title="Bring your own key"
-          body="Use your OpenAI or Anthropic key for the highest-quality notes, quizzes, chat, and voices. You pay your provider directly "� no Notely subscription, ever."
+          body="Use your OpenAI, Anthropic, or NVIDIA NIM key for the highest-quality notes, quizzes, chat, and voices. You pay your provider directly — no Notely subscription, ever."
         />
       </div>
 
@@ -84,12 +84,12 @@ export default function Onboarding() {
               type="password"
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
-              placeholder="sk-... or sk-ant-..."
+              placeholder="sk-... / sk-ant-... / nvapi-..."
               className="w-full bg-transparent text-sm outline-none placeholder:text-ink-faint"
             />
             {provider && (
               <span className="shrink-0 rounded-full bg-accent-softer px-3 py-1 text-xs font-bold text-accent">
-                {provider === "anthropic" ? "Anthropic" : "OpenAI"}
+                {providerLabel(provider)}
               </span>
             )}
           </div>

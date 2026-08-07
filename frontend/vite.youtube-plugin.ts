@@ -3,7 +3,7 @@
  * YouTube's PoToken/BotGuard gate returns empty captions to any in-browser
  * fetch, so the SPA alone can't ingest YouTube links. This plugin exposes
  * GET /api/youtube-extract?url=… during dev/preview, backed by the exact same
- * yt-dlp logic the packaged desktop shell uses (server/ytdlp.mjs) — captions
+ * yt-dlp logic the packaged desktop shell uses (backend/ytdlp.mjs) — captions
  * first, audio fallback, yt-dlp auto-downloaded on first use. Only a purely
  * static deployment (no local server, no desktop shell) is left without a
  * YouTube path.

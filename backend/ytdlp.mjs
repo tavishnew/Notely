@@ -1,6 +1,6 @@
 /* Shared yt-dlp extraction — used by BOTH the vite dev/preview plugin
  * (vite.youtube-plugin.ts) and the packaged Electron shell's local server
- * (server/httpServer.mjs). YouTube's PoToken/BotGuard gate empties in-browser
+ * (backend/httpServer.mjs). YouTube's PoToken/BotGuard gate empties in-browser
  * caption fetches, so the only reliable free path is a local yt-dlp process:
  * captions first, audio fallback for Whisper. yt-dlp is auto-downloaded on
  * first use so a non-technical user installs nothing by hand.
