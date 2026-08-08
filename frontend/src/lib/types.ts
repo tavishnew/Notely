@@ -13,7 +13,7 @@ export type SourceKind =
   | "url";
 
 export type EngineMode = "local" | "cloud";
-export type Provider = "openai" | "anthropic" | "nvidia";
+export type Provider = "openai" | "anthropic" | "nvidia" | "openrouter";
 
 /* ---- Notes & content ---------------------------------------------------- */
 
@@ -177,6 +177,8 @@ export interface EnginePrefs {
   /* null until the user makes an explicit choice at onboarding "” NO default. */
   mode: EngineMode | null;
   onboarded: boolean;
+  /* Cloud provider (openai, anthropic, nvidia, openrouter) */
+  provider?: Provider;
   /* Per-mode model selection; empty string = provider/engine default. */
   cloudModel?: string;
   localModel?: string;

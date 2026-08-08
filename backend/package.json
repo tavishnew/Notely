@@ -8,5 +8,8 @@
     "start": "node standalone.mjs",
     "dev": "node --watch standalone.mjs"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@prisma/client": "^7.9.1",
+    "prisma": "^7.9.1"
+  }
 }

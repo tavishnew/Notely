@@ -1,14 +1,12 @@
-﻿/* Engine factory. This is the single entry point generation/UI code should
-   use to get an Engine "” never `new` a provider class directly, so switching
+/* Engine factory. This is the single entry point generation/UI code should
+   use to get an Engine — never `new` a provider class directly, so switching
    providers/modes stays a one-line change at the call site. */
 
 import type { EngineMode, Provider } from "../types";
 import type { Engine } from "./types";
 import { EngineError } from "./types";
-import { OpenAIEngine } from "./openai";
-import { AnthropicEngine } from "./anthropic";
-import { NvidiaEngine } from "./nvidia";
 import { LocalEngine } from "./local";
+import { BackendEngine, validateBackendCredentials } from "./backend";
 
 export * from "./types";
 export { detectProvider, providerLabel } from "./keys";
@@ -27,28 +25,31 @@ export function createEngine(opts: CreateEngineOptions): Engine {
     return new LocalEngine(opts.localBaseUrl, opts.model);
   }
 
-  if (!opts.apiKey) {
-    throw new EngineError("An API key is required for cloud mode.", "auth");
+  if (!opts.provider) {
+    throw new EngineError(
+      "A provider (openai, anthropic, nvidia, openrouter) is required for cloud mode.",
+      "unknown",
+    );
   }
 
-  switch (opts.provider) {
-    case "anthropic":
-      return new AnthropicEngine(opts.apiKey, opts.model);
-    case "openai":
-      return new OpenAIEngine(opts.apiKey, opts.model);
-    case "nvidia":
-      return new NvidiaEngine(opts.apiKey, opts.model);
-    default:
-      throw new EngineError(
-        "A provider (openai, anthropic, or nvidia) is required for cloud mode.",
-        "unknown",
-      );
-  }
+  // All cloud providers now go through the backend
+  return new BackendEngine(opts.provider);
 }
 
 /* Cheap liveness/credentials check without the caller needing to hold onto
    the Engine instance. Throws EngineError on failure. */
 export async function validateCredentials(opts: CreateEngineOptions): Promise<void> {
-  await createEngine(opts).validate();
-}
+  if (opts.mode === "local") {
+    // For local, just create and validate the engine
+    const engine = createEngine(opts);
+    await engine.validate();
+    return;
+  }
 
+  if (!opts.provider) {
+    throw new EngineError("A provider is required for cloud mode.", "unknown");
+  }
+
+  // Validate via backend
+  await validateBackendCredentials(opts.provider);
+}

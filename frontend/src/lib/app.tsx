@@ -17,7 +17,6 @@ import { memoryStore } from "./db/memory";
 import { createEngine } from "./engine";
 import type { Engine } from "./engine/types";
 import { resilient } from "./engine/resilient";
-import { detectProvider, loadApiKey } from "./engine/keys";
 import { getEnginePrefs, saveEnginePrefs } from "./prefs";
 import type { EnginePrefs } from "./types";
 import { reconcileJobs } from "./generation/pipeline";
@@ -45,17 +44,12 @@ export async function buildEngine(
   if (prefs.mode === "local") {
     return resilient(createEngine({ mode: "local", model: prefs.localModel || undefined }));
   }
-  const key = await loadApiKey();
-  const provider = detectProvider(key);
-  if (!provider) return null;
-  return resilient(
-    createEngine({
-      mode: "cloud",
-      provider,
-      apiKey: key,
-      model: prefs.cloudModel || undefined,
-    }),
-  );
+
+  // For cloud mode, we don't need the API key in frontend anymore
+  // The backend stores encrypted credentials
+  if (!prefs.provider) return null;
+
+  return resilient(createEngine({ mode: "cloud", provider: prefs.provider, model: prefs.cloudModel || undefined }));
 }
 
 interface AppCtx {

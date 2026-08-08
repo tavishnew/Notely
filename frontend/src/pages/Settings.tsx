@@ -14,14 +14,14 @@ import {
   detectProvider,
   loadApiKey,
   providerLabel,
-  saveApiKey,
 } from "../lib/engine/keys";
-import { createEngine, NVIDIA_MODELS } from "../lib/engine";
+import { NVIDIA_MODELS } from "../lib/engine";
 import type { Provider } from "../lib/types";
 import { localSetupStatus } from "../lib/localSetup";
 import LocalSetupModal from "../components/LocalSetupModal";
 import { exportMarkdown, downloadText } from "../lib/export";
 import type { EngineMode } from "../lib/types";
+import { saveCredential, testConnection } from "../lib/backendApi";
 
 const DATA_FOLDER =
   typeof navigator !== "undefined" && navigator.platform.startsWith("Win")
@@ -87,16 +87,17 @@ export default function Settings() {
       const p = detectProvider(key.trim());
       if (!p) {
         throw new Error(
-          "Key must start with sk- (OpenAI), sk-ant- (Anthropic), or nvapi- (NVIDIA).",
+          "Key must start with sk- (OpenAI), sk-ant- (Anthropic), nvapi- (NVIDIA), or sk-or- (OpenRouter).",
         );
       }
-      await createEngine({ mode: "cloud", provider: p, apiKey: key.trim() }).validate();
-      await saveApiKey(key.trim());
+      // Save to backend (encrypted) and validate
+      await saveCredential(p, key.trim());
+      await testConnection(p);
       const cloudModel =
         prefs.cloudModel && cloudModelsFor(p).includes(prefs.cloudModel)
           ? prefs.cloudModel
           : "";
-      savePrefs({ ...prefs, mode: "cloud", cloudModel });
+      savePrefs({ ...prefs, mode: "cloud", provider: p, cloudModel });
       setStatus("saved");
       setTimeout(() => setStatus("idle"), 2500);
     } catch (e) {
@@ -316,6 +317,12 @@ const ANTHROPIC_MODELS = [
   "claude-3-5-sonnet-latest",
   "claude-3-5-haiku-latest",
 ] as const;
+const OPENROUTER_MODELS = [
+  "openai/gpt-4o",
+  "openai/gpt-4o-mini",
+  "anthropic/claude-3.5-sonnet",
+  "anthropic/claude-3.5-haiku",
+] as const;
 
 function cloudModelsFor(provider: Provider): readonly string[] {
   switch (provider) {
@@ -325,6 +332,8 @@ function cloudModelsFor(provider: Provider): readonly string[] {
       return ANTHROPIC_MODELS;
     case "nvidia":
       return NVIDIA_MODELS;
+    case "openrouter":
+      return OPENROUTER_MODELS;
   }
 }
 

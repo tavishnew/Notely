@@ -8,6 +8,7 @@ export function detectProvider(key: string): Provider | null {
   const k = key.trim();
   if (k.startsWith("sk-ant-")) return "anthropic";
   if (k.startsWith("nvapi-")) return "nvidia";
+  if (k.startsWith("sk-or-")) return "openrouter";
   if (k.startsWith("sk-")) return "openai";
   return null;
 }
@@ -20,6 +21,8 @@ export function providerLabel(provider: Provider): string {
       return "NVIDIA";
     case "openai":
       return "OpenAI";
+    case "openrouter":
+      return "OpenRouter";
   }
 }
 

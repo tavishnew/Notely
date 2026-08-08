@@ -13,9 +13,29 @@
 import fs from "node:fs";
 import http from "node:http";
 import path from "node:path";
+import os from "node:os";
 import { fileURLToPath } from "node:url";
 import { extractYoutube } from "./ytdlp.mjs";
-import { provision, status } from "./ollama.mjs";
+import {
+  testConnection,
+  listModels,
+  chatCompletion,
+  generateEmbeddings,
+  saveCredential,
+  getCredential,
+  deleteCredential,
+  listCredentials,
+  getSupportedProviders,
+  transcribeAudio,
+  synthesizeSpeech,
+  transcribeWithOpenAI,
+  synthesizeWithOpenAI,
+  provisionOllama,
+  isProvisioned,
+  getOllamaStatus,
+  ensureServingIfProvisioned,
+  shutdownOllama,
+} from "./aiProviders.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -111,7 +131,7 @@ async function handleApi(req, res, url, opts) {
 
   if (p === "/api/local/status") {
     try {
-      return sendJson(res, 200, await status(opts.binDir));
+      return sendJson(res, 200, await getOllamaStatus(opts.binDir));
     } catch (err) {
       return sendJson(res, 500, { error: err instanceof Error ? err.message : "status failed" });
     }
@@ -127,7 +147,7 @@ async function handleApi(req, res, url, opts) {
     });
     const emit = (event) => res.write(`data: ${JSON.stringify(event)}\n\n`);
     try {
-      const result = await provision({
+      const result = await provisionOllama({
         binDir: opts.binDir,
         appOrigin: opts.appOrigin,
         emit,
@@ -137,6 +157,193 @@ async function handleApi(req, res, url, opts) {
       emit({ phase: "error", message: err instanceof Error ? err.message : "setup failed" });
     }
     return res.end();
+  }
+
+  // AI Provider endpoints
+  if (p === "/api/ai/providers") {
+    try {
+      return sendJson(res, 200, { providers: getSupportedProviders() });
+    } catch (err) {
+      return sendJson(res, 500, { error: err instanceof Error ? err.message : "failed to list providers" });
+    }
+  }
+
+  if (p === "/api/ai/credentials") {
+    if (req.method === "GET") {
+      try {
+        const creds = await listCredentials();
+        return sendJson(res, 200, creds);
+      } catch (err) {
+        return sendJson(res, 500, { error: err instanceof Error ? err.message : "failed to list credentials" });
+      }
+    }
+    if (req.method === "POST") {
+      let body = "";
+      req.on("data", (chunk) => (body += chunk));
+      req.on("end", async () => {
+        try {
+          const { provider, apiKey } = JSON.parse(body);
+          if (!provider || !apiKey) {
+            return sendJson(res, 400, { error: "provider and apiKey required" });
+          }
+          await saveCredential(provider, apiKey);
+          return sendJson(res, 200, { ok: true });
+        } catch (err) {
+          return sendJson(res, 500, { error: err instanceof Error ? err.message : "failed to save credential" });
+        }
+      });
+      return;
+    }
+    if (req.method === "DELETE") {
+      const provider = url.searchParams.get("provider");
+      if (!provider) return sendJson(res, 400, { error: "provider required" });
+      try {
+        await deleteCredential(provider);
+        return sendJson(res, 200, { ok: true });
+      } catch (err) {
+        return sendJson(res, 500, { error: err instanceof Error ? err.message : "failed to delete credential" });
+      }
+    }
+    return sendJson(res, 405, { error: "method not allowed" });
+  }
+
+  if (p === "/api/ai/test") {
+    if (req.method !== "POST") return sendJson(res, 405, { error: "method not allowed" });
+    let body = "";
+    req.on("data", (chunk) => (body += chunk));
+    req.on("end", async () => {
+      try {
+        const { provider } = JSON.parse(body);
+        if (!provider) return sendJson(res, 400, { error: "provider required" });
+        const result = await testConnection(provider);
+        return sendJson(res, 200, result);
+      } catch (err) {
+        return sendJson(res, 400, { error: err instanceof Error ? err.message : "connection test failed" });
+      }
+    });
+    return;
+  }
+
+  if (p === "/api/ai/models") {
+    if (req.method !== "GET") return sendJson(res, 405, { error: "method not allowed" });
+    const provider = url.searchParams.get("provider");
+    if (!provider) return sendJson(res, 400, { error: "provider required" });
+    try {
+      const result = await listModels(provider);
+      return sendJson(res, 200, result);
+    } catch (err) {
+      return sendJson(res, 500, { error: err instanceof Error ? err.message : "failed to list models" });
+    }
+  }
+
+  if (p === "/api/chat") {
+    if (req.method !== "POST") return sendJson(res, 405, { error: "method not allowed" });
+    let body = "";
+    req.on("data", (chunk) => (body += chunk));
+    req.on("end", async () => {
+      try {
+        const { provider, messages, model, temperature, maxTokens, stream } = JSON.parse(body);
+        if (!provider || !messages) return sendJson(res, 400, { error: "provider and messages required" });
+        const res2 = await chatCompletion(provider, { messages, model, temperature, maxTokens, stream });
+        // Forward the response (including streaming)
+        res.writeHead(res2.status, {
+          "content-type": res2.headers.get("content-type") || "application/json",
+          "cache-control": "no-store",
+        });
+        res2.body.pipe(res);
+      } catch (err) {
+        return sendJson(res, 500, { error: err instanceof Error ? err.message : "chat completion failed" });
+      }
+    });
+    return;
+  }
+
+  if (p === "/api/ai/embeddings") {
+    if (req.method !== "POST") return sendJson(res, 405, { error: "method not allowed" });
+    let body = "";
+    req.on("data", (chunk) => (body += chunk));
+    req.on("end", async () => {
+      try {
+        const { provider, texts, model } = JSON.parse(body);
+        if (!provider || !texts || !Array.isArray(texts)) {
+          return sendJson(res, 400, { error: "provider and texts array required" });
+        }
+        const result = await generateEmbeddings(provider, texts, model);
+        return sendJson(res, 200, result);
+      } catch (err) {
+        return sendJson(res, 500, { error: err instanceof Error ? err.message : "embeddings failed" });
+      }
+    });
+    return;
+  }
+
+  if (p === "/api/ai/transcribe") {
+    if (req.method !== "POST") return sendJson(res, 405, { error: "method not allowed" });
+    // Handle multipart/form-data for audio upload
+    const contentType = req.headers["content-type"] || "";
+    if (!contentType.startsWith("multipart/form-data")) {
+      return sendJson(res, 400, { error: "multipart/form-data required" });
+    }
+    // Simple multipart parsing for file upload
+    let body = "";
+    req.on("data", (chunk) => (body += chunk));
+    req.on("end", async () => {
+      try {
+        // For now, expect base64-encoded audio in JSON body
+        // In production, use a proper multipart parser
+        const { audioBase64, provider, model, language, prompt, response_format, temperature } = JSON.parse(body);
+        if (!audioBase64 || !provider) {
+          return sendJson(res, 400, { error: "audioBase64 and provider required" });
+        }
+
+        // Save base64 audio to temp file
+        const audioBuffer = Buffer.from(audioBase64, "base64");
+        const tempPath = path.join(os.tmpdir(), `notely_audio_${Date.now()}.webm`);
+        fs.writeFileSync(tempPath, audioBuffer);
+
+        let result;
+        if (provider === "local" || provider === "whisper") {
+          result = await transcribeAudio(tempPath, { model, language, signal: req.socket });
+        } else {
+          result = await transcribeWithOpenAI(tempPath, provider, { model, language, prompt, response_format, temperature });
+        }
+
+        // Cleanup
+        fs.unlinkSync(tempPath);
+
+        return sendJson(res, 200, result);
+      } catch (err) {
+        return sendJson(res, 500, { error: err instanceof Error ? err.message : "transcription failed" });
+      }
+    });
+    return;
+  }
+
+  if (p === "/api/ai/tts") {
+    if (req.method !== "POST") return sendJson(res, 405, { error: "method not allowed" });
+    let body = "";
+    req.on("data", (chunk) => (body += chunk));
+    req.on("end", async () => {
+      try {
+        const { text, provider, voice, model, response_format, speed } = JSON.parse(body);
+        if (!text || !provider) {
+          return sendJson(res, 400, { error: "text and provider required" });
+        }
+
+        let audioBuffer;
+        if (provider === "local" || provider === "kokoro") {
+          audioBuffer = await synthesizeSpeech(text, { voice, model, signal: req.socket });
+        } else {
+          audioBuffer = await synthesizeWithOpenAI(text, provider, { voice, model, response_format, speed });
+        }
+
+        // Return as base64
+        return sendJson(res, 200, { audioBase64: audioBuffer.toString("base64") });
+      } catch (err) {
+        return sendJson(res, 500, { error: err instanceof Error ? err.message : "tts failed" });
+      }
+    });
+    return;
   }
 
   return sendJson(res, 404, { error: "unknown endpoint" });

@@ -3,6 +3,7 @@ import { OpenAIEngine } from "./openai";
 import { AnthropicEngine } from "./anthropic";
 import { NvidiaEngine } from "./nvidia";
 import { LocalEngine } from "./local";
+import { BackendEngine } from "./backend";
 import { createEngine } from "./index";
 import { EngineError } from "./types";
 
@@ -316,14 +317,14 @@ describe("NvidiaEngine", () => {
 describe("createEngine", () => {
   it("returns the right class per mode/provider", () => {
     expect(createEngine({ mode: "cloud", provider: "openai", apiKey: "sk-x" })).toBeInstanceOf(
-      OpenAIEngine,
+      BackendEngine,
     );
     expect(
       createEngine({ mode: "cloud", provider: "anthropic", apiKey: "sk-ant-x" }),
-    ).toBeInstanceOf(AnthropicEngine);
+    ).toBeInstanceOf(BackendEngine);
     expect(
       createEngine({ mode: "cloud", provider: "nvidia", apiKey: "nvapi-x" }),
-    ).toBeInstanceOf(NvidiaEngine);
+    ).toBeInstanceOf(BackendEngine);
     expect(createEngine({ mode: "local" })).toBeInstanceOf(LocalEngine);
   });
 
